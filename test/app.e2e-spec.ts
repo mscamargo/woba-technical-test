@@ -221,8 +221,6 @@ describe('AppController (e2e)', () => {
           .post('/v1/appointments')
           .send(fakeAppointment);
 
-        console.log(response.body);
-
         expect(response.status).toEqual(201);
         expect(response.body.id).toBeDefined();
         expect(response.body.created_at).toBeDefined();
