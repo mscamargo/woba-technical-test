@@ -1,0 +1,11 @@
+services:
+  app:
+    image: node:18-alpine
+    working_dir: /home/node/app
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/node/app
+    command: npm run start:dev

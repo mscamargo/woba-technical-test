@@ -5,6 +5,7 @@
 ## Installation
 
 ```bash
+$ nvm use 18
 $ npm install
 ```
 
@@ -12,7 +13,8 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
+$ npm run start #or
+$ docker compose up
 
 # watch mode
 $ npm run start:dev
