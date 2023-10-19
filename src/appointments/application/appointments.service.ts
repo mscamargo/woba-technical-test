@@ -9,15 +9,19 @@ import {
   GetAppointmentsByUserIdQuery,
   GetAppointmentsByUserIdQueryResult,
 } from '../domain/queries/get-appointments-by-user-id.query';
+import { CreatedAppointmentDto } from './dtos/created-appointment.dto';
+import { AppointmentDetailDto } from './dtos/appointment-detail.dto';
 
 @Injectable()
-export class AppointmentService {
+export class AppointmentsService {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
 
-  async createAppointment(createAppointmentDto: CreateAppointmentDto) {
+  async createAppointment(
+    createAppointmentDto: CreateAppointmentDto,
+  ): Promise<CreatedAppointmentDto> {
     const { user_id, space_id, date, end_time, start_time } =
       createAppointmentDto;
 
@@ -25,10 +29,10 @@ export class AppointmentService {
     const [endHour, endMinute] = end_time.split(':');
 
     const appointmentStartTime = new Date(date);
-    appointmentStartTime.setHours(Number(startHour), Number(startMinute));
+    appointmentStartTime.setUTCHours(Number(startHour), Number(startMinute));
 
     const appointmentEndTime = new Date(date);
-    appointmentEndTime.setHours(Number(endHour), Number(endMinute));
+    appointmentEndTime.setUTCHours(Number(endHour), Number(endMinute));
 
     const { id, created_at, updated_at } = await this.commandBus.execute<
       CreateAppointmentCommand,
@@ -54,7 +58,9 @@ export class AppointmentService {
     };
   }
 
-  async getAppointmentsByUserId(userId?: string) {
+  async getAppointmentsByUserId(
+    userId?: string,
+  ): Promise<AppointmentDetailDto[]> {
     if (!userId) {
       throw new UnauthorizedException();
     }
@@ -63,17 +69,21 @@ export class AppointmentService {
       GetAppointmentsByUserIdQueryResult
     >(new GetAppointmentsByUserIdQuery(userId));
 
-    return appointments.map((appointment) => ({
-      ...appointment,
-      date: appointment.start_time.toISOString().split('T')[0],
-      start_time: appointment.start_time
-        .toISOString()
-        .split('T')[1]
-        .substring(0, 5),
-      end_time: appointment.end_time
-        .toISOString()
-        .split('T')[1]
-        .substring(0, 5),
-    }));
+    const formattedAppointments: AppointmentDetailDto[] = appointments.map(
+      (appointment) => ({
+        ...appointment,
+        date: appointment.start_time.toISOString().split('T')[0],
+        start_time: appointment.start_time
+          .toISOString()
+          .split('T')[1]
+          .substring(0, 5),
+        end_time: appointment.end_time
+          .toISOString()
+          .split('T')[1]
+          .substring(0, 5),
+      }),
+    );
+
+    return formattedAppointments;
   }
 }

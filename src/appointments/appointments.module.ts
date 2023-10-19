@@ -3,7 +3,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AppointmentsController } from './application/appointments.controller';
-import { AppointmentService } from './application/appointments.service';
+import { AppointmentsService } from './application/appointments.service';
 import { CreateAppointmentHandler } from './domain/commands/create-appointment.handler';
 import { AppointmentCreatedHandler } from './domain/events/appointment-created.handler';
 import { AppointmentsRepository } from './domain/interfaces/repositories/appointments.repository';
@@ -14,7 +14,7 @@ import { InMemoryAppointmentsRepository } from './infra/repositories/in-memory-a
   imports: [EventEmitterModule.forRoot(), CqrsModule],
   controllers: [AppointmentsController],
   providers: [
-    AppointmentService,
+    AppointmentsService,
     CreateAppointmentHandler,
     GetAppointmentsByUserIdHandler,
     AppointmentCreatedHandler,

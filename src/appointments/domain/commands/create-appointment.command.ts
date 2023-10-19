@@ -15,6 +15,6 @@ export class CreateAppointmentCommandResult {
     readonly start_time: Date,
     readonly end_time: Date,
     readonly created_at: Date,
-    readonly updated_at: Date,
+    readonly updated_at: null,
   ) {}
 }
