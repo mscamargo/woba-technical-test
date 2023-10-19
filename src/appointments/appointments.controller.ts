@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
-import { CreateAppointmentDto } from './create-appointment.dto';
-import { AppService } from './app.service';
+import { CreateAppointmentDto } from './dtos/create-appointment.dto';
+import { AppService } from './appointments.service';
 
 @Controller({
   path: 'appointments',
   version: '1',
 })
-export class AppController {
+export class AppointmentsController {
   constructor(private readonly appService: AppService) {}
 
   @Post()

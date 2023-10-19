@@ -3,10 +3,10 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { CreateAppointmentDto } from './create-appointment.dto';
+import { CreateAppointmentDto } from './dtos/create-appointment.dto';
 import { AppointmentsRepository } from './appointments.repository';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { AppointmentCreatedEvent } from './appointment-created.event';
+import { AppointmentCreatedEvent } from './events/appointment-created.event';
 
 @Injectable()
 export class AppService {

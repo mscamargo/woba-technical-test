@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
-import { CreateAppointmentDto } from './create-appointment.dto';
+import { CreateAppointmentDto } from './dtos/create-appointment.dto';
 
 interface Appointment {
   id: string;

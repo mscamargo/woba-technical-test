@@ -1,20 +1,9 @@
-import { Module, ValidationPipe } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { APP_PIPE } from '@nestjs/core';
-import { AppointmentsRepository } from './appointments.repository';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { Module } from '@nestjs/common';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
-  imports: [EventEmitterModule.forRoot()],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    AppointmentsRepository,
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
-  ],
+  imports: [AppointmentsModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
