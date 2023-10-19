@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
 import { CreateAppointmentDto } from './dtos/create-appointment.dto';
-import { AppService } from './appointments.service';
+import { AppointmentService } from './appointments.service';
 
 @Controller({
   path: 'appointments',
   version: '1',
 })
 export class AppointmentsController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppointmentService) {}
 
   @Post()
   async create(@Body() createAppointmentDto: CreateAppointmentDto) {

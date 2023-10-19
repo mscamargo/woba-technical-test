@@ -288,15 +288,21 @@ describe('AppController (e2e)', () => {
       expect(response.status).toBe(200);
       expect(response.body).toBeInstanceOf(Array);
       expect(response.body.length).toBe(appointmentsToCreate.length);
-      expect(response.body[0].id).toBeDefined();
-      expect(response.body[0].space_id).toBeDefined();
-      expect(response.body[0].user_id).toBeDefined();
-      expect(response.body[0].date).toBeDefined();
-      expect(response.body[0].start_time).toBeDefined();
-      expect(response.body[0].end_time).toBeDefined();
+
+      expect(typeof response.body[0].id).toEqual('string');
+      expect(typeof response.body[0].space_id).toEqual('string');
+      expect(typeof response.body[0].user_id).toEqual('string');
+      expect(typeof response.body[0].date).toEqual('string');
+      expect(typeof response.body[0].start_time).toEqual('string');
+      expect(typeof response.body[0].end_time).toEqual('string');
+
       expect(response.body[0].created_at).toBeUndefined();
       expect(response.body[0].updated_at).toBeUndefined();
+
       expect(response.body[0].user_id).toEqual(userId);
+
+      expect(response.body[0].start_time).toMatch(/^([01]\d|2[0-3]):[0-5]\d$/);
+      expect(response.body[0].end_time).toMatch(/^([01]\d|2[0-3]):[0-5]\d$/);
     });
   });
 });
